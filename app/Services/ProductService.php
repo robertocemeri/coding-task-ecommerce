@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Traits\APITrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ProductService
     public function store_product(object $data)
     {
         // Store product
-        $products = Product::create([
+        $product = Product::create([
             'title' => $data->title,
             'user_id' => auth()->user()->id,
             'description' => $data->description,
@@ -36,8 +37,17 @@ class ProductService
             'start_time' => $data->start_time,
             'end_time' => $data->end_time,
         ]);
+        if($product->id){
+            foreach($data->categories as $category){
+                ProductCategory::create([
+                    'product_id'=>$product->id,
+                    'category_id'=>$category,
+                ]);
+            }
+        }
+        
 
-        return $this->apiResponse($products);
+        return $this->apiResponse($product);
     }
 
     public function get_product(int $id)

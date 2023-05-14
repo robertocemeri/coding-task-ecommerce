@@ -26,7 +26,7 @@ class StoreProductRequest extends FormRequest
             'user_id' => ['required'],
             'title' => ['required','min:4', 'max:50'],
             'description' => ['required', 'string'],
-            'picture' => [],
+            'picture' => ['required'],
             'start_price' => ['required'],
             'buy_now_price' => ['required'],
             'price_steps' => ['required'],
