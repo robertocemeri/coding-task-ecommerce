@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\Bid;
 use App\Models\ProductCategory;
 use App\Traits\APITrait;
 use Carbon\Carbon;
@@ -53,7 +54,28 @@ class ProductService
     public function get_product(int $id)
     {
         // get product by id
-        $product = Product::where('id',$id)->with('categories','bids')->get();
+        $product = Product::where('id',$id)->with(['categories','bids','bids.user'])->get();
+        $max_bid = -9999;
+        foreach($product[0]->bids as $bid){
+            if($bid->bid_price > $max_bid) $max_bid = $bid->bid_price;
+        }
+        $product[0]->max_bid = $max_bid;
+
         return $this->apiResponse($product);
     }
+
+
+    public function place_bid_product(object $data)
+    {
+        // Store product bid
+        $bid = Bid::create([
+            'user_id' => $data->user_id,
+            'product_id' => $data->product_id,
+            'bid_price' => $data->bid_price,
+        ]);
+
+        return $this->apiResponse($bid);
+    }
+
+
 }

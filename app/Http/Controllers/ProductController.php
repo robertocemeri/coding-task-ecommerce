@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\StoreProductBidRequest;
 use Illuminate\Http\JsonResponse;
 use App\Traits\APITrait;
 
@@ -57,6 +58,15 @@ class ProductController extends Controller
         //
         try {
             return $this->productService->store_product($request);
+        } catch (\Exception $e) {
+            return $this->apiResponse([], 500, $e->getMessage());
+        }
+    }
+    public function place_bid(StoreProductBidRequest $request): JsonResponse
+    {
+        //
+        try {
+            return $this->productService->place_bid_product($request);
         } catch (\Exception $e) {
             return $this->apiResponse([], 500, $e->getMessage());
         }

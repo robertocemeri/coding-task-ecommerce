@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     //product routes
     Route::get('products', [ProductController::class, 'index'])->name('products.list');
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
+    Route::post('products/bid', [ProductController::class, 'place_bid'])->name('products.bid');
     Route::get('products/{id}', [ProductController::class, 'show'])->name('products.show');
     Route::get('user/products', [ProductController::class, 'get_all_products_by_user'])->name('user.products');
     Route::get('/categories', function (Request $request) {
