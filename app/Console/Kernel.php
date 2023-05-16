@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
                 if($now->greaterThan($endDate)){
                     $max_bid = Bid::where('product_id',$product->id)->orderBy('bid_price','DESC')->first();
                     $purchase_exists = Purchase::where('product_id',$max_bid->product_id)->get();
-                    if(!$purchase_exists){
+                    if(Count($purchase_exists) === 0){
                         Purchase::create([
                             'user_id' => $max_bid->user_id,
                             'product_id' => $max_bid->product_id,
@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
                         ]);
                         $product->sold = 1;
                         $product->save();
+                        info('Winner added for a product');
                     }
                     
                 }
