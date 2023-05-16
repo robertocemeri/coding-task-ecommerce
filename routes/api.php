@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\NotificationController;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -44,5 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         ], Response::HTTP_OK);
 
     });
+    Route::get('user/notifications', [NotificationController::class, 'get_all_notifications_for_user'])->name('user.notifications');
+    Route::get('user/notifications-count', [NotificationController::class, 'get_unread_notifications_counts_for_user'])->name('user.notifications_count');
+    Route::get('user/read-all-notifications', [NotificationController::class, 'read_all_notifications_for_user'])->name('user.read_all_notifications');
 
 });

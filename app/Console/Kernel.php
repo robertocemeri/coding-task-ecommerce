@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\Product;
+use App\Models\Notification;
 use App\Models\Bid;
 use App\Models\Purchase;
 
@@ -28,6 +29,10 @@ class Kernel extends ConsoleKernel
                             'user_id' => $max_bid->user_id,
                             'product_id' => $max_bid->product_id,
                             'price' => $max_bid->bid_price,
+                        ]);
+                        Notification::create([
+                            'user_id' => $max_bid->user_id,
+                            'text' => "You bought new product you can find it in your inventory!",
                         ]);
                         $product->sold = 1;
                         $product->save();

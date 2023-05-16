@@ -103,6 +103,10 @@ class ProductService
                 'product_id' => $id,
                 'price' => $product->buy_now_price,
             ]);
+            Notification::create([
+                'user_id' => auth()->user()->id,
+                'text' => "You bought new product you can find it in your inventory!",
+            ]);
             $product->sold = 1;
             $product->save();
         }
