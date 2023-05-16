@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Product extends Model
@@ -19,7 +20,8 @@ class Product extends Model
         'buy_now_price',
         'price_steps',
         'start_time',
-        'end_time'
+        'end_time',
+        'sold'
     ];
 
     protected $table = 'products';
@@ -32,5 +34,9 @@ class Product extends Model
     public function bids(): HasMany
     {
         return $this->hasMany(Bid::class);
+    }
+    public function purchase(): HasOne
+    {
+        return $this->hasOne(Purchase::class);
     }
 }

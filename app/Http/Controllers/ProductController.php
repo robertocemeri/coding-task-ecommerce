@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\StoreProductBidRequest;
+use App\Http\Requests\BuyNowProductRequest;
 use Illuminate\Http\JsonResponse;
 use App\Traits\APITrait;
 
@@ -72,6 +73,15 @@ class ProductController extends Controller
         }
     }
 
+    public function buy_now(BuyNowProductRequest $request): JsonResponse
+    {
+        //
+        try {
+            return $this->productService->buy_now($request->product_id);
+        } catch (\Exception $e) {
+            return $this->apiResponse([], 500, $e->getMessage());
+        }
+    }
     /**
      * Display the specified resource.
      */
