@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\Bid;
+use App\Models\Notification;
 use App\Models\Purchase;
 use App\Models\ProductCategory;
 use App\Traits\APITrait;
@@ -24,6 +25,7 @@ class ProductService
         $products = Product::where('user_id',auth()->user()->id)->with('categories','bids')->get();
         return $this->apiResponse($products);
     }
+    
     public function get_all_purchases_by_user()
     {
         $purchases = Purchase::where('user_id',auth()->user()->id)->with('product')->get();

@@ -110,4 +110,14 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function get_all_purchases_by_user(): JsonResponse
+    {
+        //
+        try {
+            return $this->productService->get_all_purchases_by_user();
+        } catch (\Exception $e) {
+            return $this->apiResponse([], 500, $e->getMessage());
+        }
+    }
 }
